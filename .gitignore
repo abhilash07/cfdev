@@ -30,3 +30,4 @@ acceptance/pkg/
 acceptance/src/github.com/cloudfoundry/results/
 
 src/code.cloudfoundry.org/cfdev/cfdev
+build

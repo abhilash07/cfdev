@@ -17,7 +17,7 @@ done
 if [[ "$bosh_deployment" = "" ]]; then
   echo "USAGE ./generate-manifest -c <path-to-bosh-deployment>"
 fi
-bosh_deployment_version="$(git -C "$bosh_deployment" describe --tags)"
+bosh_deployment_version="$(git -C "$bosh_deployment" describe --tags --always)"
 
 pushd "$bosh_deployment" > /dev/null
     bosh int bosh.yml \
@@ -31,7 +31,7 @@ pushd "$bosh_deployment" > /dev/null
       -o "$cfdev_ops"/disable-app-armor.yml \
       -o "$cfdev_ops"/remove-ports.yml \
       -o "$cfdev_ops"/use-warden-cpi-v39.yml \
-      -o use-stemcell-3468.17.yml \
+      -o "$cfdev_ops"/use-stemcell-3468.17.yml \
       \
       -v director_name="warden" \
       -v internal_cidr=10.245.0.0/24 \

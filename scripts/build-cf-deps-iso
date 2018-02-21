@@ -6,19 +6,19 @@ while getopts "c:b:" arg; do
   case $arg in
     c) cf_deps=$OPTARG
       ;;
-    b) bosh_release=$OPTARG
+    b) bosh_deps=$OPTARG
   esac
 done
 
 echo "$cf_deployment_releases"
 stemcell_version=3541.4
 
-if [[ "$cf_deployment_releases" = "" ]]; then
+if [[ "$cf_deps" = "" ]]; then
   echo "USAGE: ./build-cf-iso -c <path-to-compiled-cf-releases>"
   exit 1
 fi
 
-if [[ "$bosh_release" = "" ]]; then
+if [[ "$bosh_deps" = "" ]]; then
   echo "USAGE: ./build-cf-iso -c <path-to-compiled-cf-releases> -b <path-to-compiled-bosh-release>"
   exit 1
 fi
@@ -38,8 +38,6 @@ docker export "$cid" > "${iso_dir}/workspace.tar"
 docker kill "$cid"
 docker rm "$cid"
 
-curl -L "https://bosh.io/d/stemcells/bosh-warden-boshlite-ubuntu-trusty-go_agent?v=$stemcell_version" -o "$iso_dir/bosh-warden-boshlite-ubuntu-trusty-go_agent?v=$stemcell_version"
-cp "$bosh_release" "$iso_dir"
-
-tar xzf "$cf_deployment_releases" -C $iso_dir --strip-components 1
+tar xzf "$cf_deps" -C $iso_dir --strip-components 1
+tar xzf "$bosh_deps" -C $iso_dir --strip-components 1
 mkisofs -V cf-oss-deps -R -o "$iso_file" "$iso_dir"

@@ -7,7 +7,30 @@ import (
 	"os"
 )
 
-type Catalog struct{
+var (
+	cfdepsUrl string
+	cfdepsMd5 string
+
+	cfefiUrl string
+	cfefiMd5 string
+
+	vpnkitUrl string
+	vpnkitMd5 string
+
+	hyperkitUrl string
+	hyperkitMd5 string
+
+	linuxkitUrl string
+	linuxkitMd5 string
+
+	qcowtoolUrl string
+	qcowtoolMd5 string
+
+	uefiUrl string
+	uefiMd5 string
+)
+
+type Catalog struct {
 	UI UI
 }
 
@@ -37,6 +60,47 @@ func catalog() (*resource.Catalog, error) {
 		return &c, nil
 	}
 
+	return &resource.Catalog{
+		Items: []resource.Item{
+			{
+				URL:  cfdepsUrl,
+				Name: "cf-oss-deps.iso",
+				MD5:  cfdepsMd5,
+			},
+			{
+				URL:  cfefiUrl,
+				Name: "cfdev-efi.iso",
+				MD5:  cfefiMd5,
+			},
+			{
+				URL:  vpnkitUrl,
+				Name: "vpnkit",
+				MD5:  vpnkitMd5,
+			},
+			{
+				URL:  hyperkitUrl,
+				Name: "hyperkit",
+				MD5:  hyperkitMd5,
+			},
+			{
+				URL:  linuxkitUrl,
+				Name: "linuxkit",
+				MD5:  linuxkitMd5,
+			},
+			{
+				URL:  qcowtoolUrl,
+				Name: "qcow-tool",
+				MD5:  qcowtoolMd5,
+			},
+			{
+				URL:  uefiUrl,
+				Name: "UEFI.fd",
+				MD5:  uefiMd5,
+			},
+		},
+	}, nil
+
+	/*
 	return &resource.Catalog{
 		Items: []resource.Item{
 			{
@@ -76,4 +140,5 @@ func catalog() (*resource.Catalog, error) {
 			},
 		},
 	}, nil
+	*/
 }
